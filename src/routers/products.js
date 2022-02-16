@@ -14,32 +14,32 @@ router.get('/products', async(req, res)=>{
 
         }
         catch (error) {
-            res.status(404).send(err);
+            res.status(404).send(error);
         }
 });
 
-router.get('/products/:id', async(req, res)=>{
+router.get('/products/:name', async(req, res)=>{
     try {
-        const _id = req.params.id;
-        const getProduct = await product.findById(_id);
+        const name = req.params.name;
+        const getProduct = await product.find({name});
         res.status(200).send(getProduct);
 
     }
     catch (error) {
-        res.status(404).send(err);
+        res.status(404).send(error);
     }
 });
 
 
-router.post('/products/add', async (req, res) =>{
+router.post('/products/add', async(req, res) => {
     try{
        const addingProduct = new product(req.body)
-       console.log(req.body);
        const inserted= await addingProduct.save();
+       console.log(inserted);
        res.status(201).send(inserted);
     }
-    catch(err){
-         res.status(400).send(err);
+    catch(error){
+         res.status(400).send(error);
     }
  
  });
@@ -49,15 +49,14 @@ router.patch('/products/:id', async(req, res)=>{
         const _id=req.params.id;
         const updatedData = await product.findByIdAndUpdate(_id,req.body,
           {
-              useFindAndModify:false,
               new:true
           }  
         );
-        res.status(204).send(updatedData);
+        res.status(200).send(updatedData);
 
     }
     catch (error) {
-        res.status(500).send(err);
+        res.status(500).send(error);
     }
 });
 
@@ -68,7 +67,7 @@ router.delete('/products/delete', async(req, res)=>{
 
     }
     catch (error) {
-        res.status(500).send(err);
+        res.status(500).send(error);
     }
 });
 
@@ -80,7 +79,7 @@ router.delete('/products/delete/:id', async(req, res)=>{
 
     }
     catch (error) {
-        res.status(500).send(err);
+        res.status(500).send(error);
     }
 });
 

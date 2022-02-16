@@ -1,10 +1,9 @@
 const mongoose=require("mongoose");
 
-
-const AutoIncrement = require('mongoose-sequence')(mongoose);
+require("../db/connect");
+// const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const productSchema = new mongoose.Schema({
-    _id:Number,
     name:{ 
         type:String,
         required:true,
@@ -18,8 +17,9 @@ const productSchema = new mongoose.Schema({
         type:Boolean,
         default:false,
     }
-})
-productSchema.plugin(AutoIncrement);
+});
+
+// productSchema.plugin(AutoIncrement);
 
 const product = new mongoose.model("Product", productSchema);
 
