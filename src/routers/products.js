@@ -40,7 +40,6 @@ router.post('/products', async(req, res) => {
         }else{
             const addingProduct = new product(req.body)
             const inserted= await addingProduct.save();
-            console.log(inserted);
             res.status(201).send(inserted);
         }
     }
