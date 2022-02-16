@@ -1,4 +1,5 @@
 const express = require('express');
+const { createConnection } = require('mongoose');
 const router = new express.Router();
 const product = require('../models/products');
 
@@ -31,14 +32,20 @@ router.get('/products/:name', async(req, res)=>{
 });
 
 
-router.post('/products/add', async(req, res) => {
+router.post('/products', async(req, res) => {
     try{
-       const addingProduct = new product(req.body)
-       const inserted= await addingProduct.save();
-       console.log(inserted);
-       res.status(201).send(inserted);
+        if (Array.isArray(req.body)) {
+            const dataInserted= await product.insertMany(req.body);
+            res.status(201).send(dataInserted);
+        }else{
+            const addingProduct = new product(req.body)
+            const inserted= await addingProduct.save();
+            console.log(inserted);
+            res.status(201).send(inserted);
+        }
     }
     catch(error){
+         console.log(error);
          res.status(400).send(error);
     }
  
