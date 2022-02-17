@@ -1,8 +1,9 @@
 const mongoose=require("mongoose");
 
 require("../db/connect");
-// const AutoIncrement = require('mongoose-sequence')(mongoose);
 
+
+/* Creating the schema for product document */
 const productSchema = new mongoose.Schema({
     name:{ 
         type:String,
@@ -19,8 +20,8 @@ const productSchema = new mongoose.Schema({
     }
 });
 
-// productSchema.plugin(AutoIncrement);
 
+/*Creating instance using schema i.e. collection named product */
 const product = new mongoose.model("Product", productSchema);
 
 module.exports = product;

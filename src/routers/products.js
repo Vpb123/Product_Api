@@ -1,3 +1,6 @@
+/*This file contains rounters to handle  all the methods */
+
+/*Importing required modules */
 const express = require('express');
 const { createConnection } = require('mongoose');
 const router = new express.Router();
@@ -8,6 +11,7 @@ router.get('/', async (req, res) =>{
     res.send("Hello, Welcome to Prodcut Api");
 })
 
+/*Method to get list of all products  */
 router.get('/products', async(req, res)=>{
         try {
             const data = await product.find({}).sort({_id:1});
@@ -19,6 +23,7 @@ router.get('/products', async(req, res)=>{
         }
 });
 
+/*Method to get particular product using name  */
 router.get('/products/:name', async(req, res)=>{
     try {
         const name = req.params.name;
@@ -31,7 +36,7 @@ router.get('/products/:name', async(req, res)=>{
     }
 });
 
-
+/*Mehtod to add products to the database (One or List of Products) */
 router.post('/products', async(req, res) => {
     try{
         if (Array.isArray(req.body)) {
@@ -40,6 +45,7 @@ router.post('/products', async(req, res) => {
         }else{
             const addingProduct = new product(req.body)
             const inserted= await addingProduct.save();
+
             res.status(201).send(inserted);
         }
     }
@@ -50,12 +56,13 @@ router.post('/products', async(req, res) => {
  
  });
  
+/*Method to access the particular product using id and update it */
 router.patch('/products/:id', async(req, res)=>{
     try {
         const _id=req.params.id;
         const updatedData = await product.findByIdAndUpdate(_id,req.body,
           {
-              new:true
+              new:true /*So that we can get the updated data in response */
           }  
         );
         res.status(200).send(updatedData);
@@ -66,6 +73,7 @@ router.patch('/products/:id', async(req, res)=>{
     }
 });
 
+/*Method to delete all products from database */
 router.delete('/products/delete', async(req, res)=>{
     try {
         await product.deleteMany({});
@@ -77,6 +85,7 @@ router.delete('/products/delete', async(req, res)=>{
     }
 });
 
+/*Method to delete particular product using id */
 router.delete('/products/delete/:id', async(req, res)=>{
     try {
         await product.findByIdAndDelete(req.params.id);
