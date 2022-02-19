@@ -1,0 +1,65 @@
+[{
+  "_id": {
+    "$oid": "620c7b79a9c302843819a606"
+  },
+  "name": "Laptop",
+  "price": 50000,
+  "available": true,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "620c8616641ed80f1beac85b"
+  },
+  "name": "PC",
+  "price": 100000,
+  "available": true,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "620c881cf90afefeacf58b25"
+  },
+  "name": "TV",
+  "price": 34000,
+  "available": false,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "620c8867f90afefeacf58b29"
+  },
+  "name": "PC",
+  "price": 70000,
+  "available": false,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "620cab2df4d6435ff94f0953"
+  },
+  "name": "Phone",
+  "price": 5000,
+  "available": true,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "620cab2df4d6435ff94f0954"
+  },
+  "name": "camera",
+  "price": 24000,
+  "available": true,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "620cae83d927b0b98b2672b8"
+  },
+  "name": "Charger",
+  "price": 1100,
+  "available": false,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "620cae83d927b0b98b2672b9"
+  },
+  "name": "Earphones",
+  "price": 700,
+  "available": true,
+  "__v": 0
+}]
