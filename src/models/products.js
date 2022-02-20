@@ -1,6 +1,6 @@
 const mongoose=require("mongoose");
 
-require("../db/connect");
+require("../config/db.config");
 
 
 /* Creating the schema for product document */
