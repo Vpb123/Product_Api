@@ -1,18 +1,21 @@
 version: '3'
 
 services:
-  app:
-    container_name: product_api
-    restart: always
-    build: .
-    ports:
-      - '8000:8000'
-    links:
-     - mongo
-
   mongo:
     container_name: mongo
     image: mongo
+    env_file: ./.env
     ports:
-     - '27017:27017'
+     - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
+
+  app:
+    container_name: product_api
+    restart: always
+    env_file: ./.env
+    build: .
+    ports:
+      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+    depends_on:
+      - mongo
+
 
