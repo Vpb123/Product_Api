@@ -8,6 +8,9 @@ services:
     ports:
      - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
 
+    volumes:
+      - db:/data/db
+
   app:
     container_name: product_api
     restart: always
@@ -17,5 +20,9 @@ services:
       - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
     depends_on:
       - mongo
+
+volumes:
+    db:
+
 
 
