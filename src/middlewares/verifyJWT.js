@@ -2,6 +2,16 @@ const jwt = require("jsonwebtoken"),
 config=require("../config/auth.config");
 User = require("../models/user.model");
 
+
+const{ TokenExpiredError} =jwt;
+
+const catchError = (err, res) => {
+    if(err instanceof TokenExpiredError){
+        return res.status(401).send({ message:"The Token has expired."});
+    }
+    return res.status(401).send({message:err.message});
+}
+
 const verifyToken = (req, res, next)=>{
     if(req.headers && req.headers.authorization && 
     req.headers.authorization.split(' ')[0] ==='JWT'){
@@ -9,8 +19,7 @@ const verifyToken = (req, res, next)=>{
         let token = req.headers.authorization.split(' ')[1]
         jwt.verify(token, config.secret, (err, decode)=>{
           if(err) {
-          res.status(500).send(err)
-          return;
+          return catchError(err, res);
           }
           User.findOne({
               _id:decode.id
@@ -20,14 +29,13 @@ const verifyToken = (req, res, next)=>{
                   console.log(err);
               }
               else{
-                  req.user=user;
                   next();
               }
           });
 
         }); 
     }else{
-        res.status(400).send("Access token is not provided");
+        res.status(401).send("Access token is not provided");
         return;
     }
 };

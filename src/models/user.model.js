@@ -8,15 +8,9 @@ const userSchema = new mongoose.Schema({
                 required:[true, "username not provided"]
             },
             email: {
-                type: String,
-                lowercase: true,
+                type: mongoose.SchemaTypes.Email,
                 required:[true, "email not provided"],
-                validate: {
-                    validator: function (v) {
-                      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-                    },
-                    message: '{VALUE} is not a valid email!'
-                  }
+
             }, 
             password:{ 
                 type: String,

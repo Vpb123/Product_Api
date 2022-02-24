@@ -1,7 +1,10 @@
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const User = require("../models/user.model")
-const auth =  require("../config/auth.config");
+const jwt = require("jsonwebtoken"),
+bcrypt = require("bcryptjs"),
+User = require("../models/user.model"),
+RefreshToken = require("../models/refreshToken.model"),
+auth =  require("../config/auth.config");
+
+
 
 exports.signUp = async (req, res) =>{
     try{
@@ -23,7 +26,7 @@ exports.signUp = async (req, res) =>{
 exports.signIn = async(req,res) =>{
     try{
        const user = await User.findOne({username:req.body.username});
-       const isValidPassword =bcrypt.compareSync(req.body.password,
+       const isValidPassword =await bcrypt.compare(req.body.password,
          user.password)
 
        if(!isValidPassword){
@@ -32,10 +35,11 @@ exports.signIn = async(req,res) =>{
            });
        }
 
-       let token = jwt.sign({id: user.id}, auth.secret, 
+       let token = jwt.sign({id: user._id}, auth.secret, 
         {
-            expiresIn: 43200
+            expiresIn: auth.tokenLife,
         })
+        let refreshToken = await RefreshToken.createToken(user);
 
         res.status(200).send({
             user:{
@@ -45,6 +49,7 @@ exports.signIn = async(req,res) =>{
             },
             message: "Login Successfull",
             accessToken: token,
+            refreshToken: refreshToken,
         });
     }catch(err){
         console.log(err)
@@ -52,3 +57,4 @@ exports.signIn = async(req,res) =>{
     }
 
 }
+
